@@ -58,7 +58,10 @@ class DatabaseDummy: DataBase {
         )
         accounts.add(acc1)
         registerData.add(Triple<String, String, Account>("login", "password", accounts[0]))
-        notifications = mutableListOf(Alarm("alarm 1 test text", 1586822400L * 1000L, 1), Alarm("alarm 2 test text", 1586822400L * 1000L, 1), Alarm("alarm 3 test text", 1586822400L * 1000L, 1))
+        notifications = mutableListOf(
+                Alarm("alarm 1 test text", 1586822400L * 1000L, 1, true, true),
+                Alarm("alarm 2 test text", 1586822400L * 1000L, 1, false, true),
+                Alarm("alarm 3 test text", 1586822400L * 1000L, 1, true, false))
     }
     override fun register(
         login: String,

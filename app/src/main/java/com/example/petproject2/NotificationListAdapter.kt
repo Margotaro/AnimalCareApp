@@ -1,17 +1,12 @@
 package com.example.petproject2
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import android.provider.AlarmClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.petproject2.database.PetEntity
+
+
 /*
 internal class AlarmListAdapter internal constructor(context: Context, private val resource: Int, private val itemList: List<String>) : ArrayAdapter<ImageListAdapter.ItemHolder>(context, resource) {
 
@@ -55,14 +50,16 @@ internal class AlarmListAdapter internal constructor(context: Context, private v
     }*/
 }
 */
-class NotificationListAdapter (private val mAlarm: List<Alarm>) : RecyclerView.Adapter<NotificationListAdapter.ViewHolder>() {
+class NotificationListAdapter(private val mAlarm: List<Alarm>) : RecyclerView.Adapter<NotificationListAdapter.ViewHolder>(){
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
+    inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView)  {
         // Your holder should contain and initialize a member variable
         // for any view that will be set as you render a row
-        val nameTextView = itemView.findViewById<TextView>(R.id.alarm_context_name)
-        val messageButton = itemView.findViewById<Button>(R.id.turn_on_off_name)
+        val alarmNameTextView = itemView.findViewById<TextView>(R.id.alarm_context_name)
+        var alarmSwitch = itemView.findViewById<Switch>(R.id.alarm_on_off)
+        val alarmTimeTextView = itemView.findViewById<TextView>(R.id.alarm_time)
+        val alarmRepeat = itemView.findViewById<TextView>(R.id.alarm_repeat)//TODO: check types later
     }
 
     // ... constructor and member variables
@@ -80,12 +77,18 @@ class NotificationListAdapter (private val mAlarm: List<Alarm>) : RecyclerView.A
         // Get the data model based on position
         val alarm: Alarm = mAlarm.get(position)
         // Set item views based on your views and data model
-        val textView = viewHolder.nameTextView
-        textView.setText(alarm.notification_msg)
-        val button = viewHolder.messageButton
-        button.text = "TODO"
+        val descriptionTextView = viewHolder.alarmNameTextView
+        val switch = viewHolder.alarmSwitch
+        val time = viewHolder.alarmTimeTextView
+        val repeatDescriptionTextView = viewHolder.alarmRepeat
+        descriptionTextView.setText(alarm.notification_msg)
+        switch.setChecked(alarm.isOn)
+        time.setText(alarm.call_time_string)
+        repeatDescriptionTextView.setText(if (alarm.repeatState == true) "Once" else "Repeating")
+        switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            mAlarm.elementAt(position).isOn = isChecked
+        }
     }
-
     override fun getItemCount(): Int {
         return mAlarm.size
     }
