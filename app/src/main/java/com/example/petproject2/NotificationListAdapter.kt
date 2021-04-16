@@ -50,16 +50,28 @@ internal class AlarmListAdapter internal constructor(context: Context, private v
     }*/
 }
 */
-class NotificationListAdapter(private val mAlarm: List<Alarm>) : RecyclerView.Adapter<NotificationListAdapter.ViewHolder>(){
+class NotificationListAdapter(private val mAlarm: List<Alarm>, val alarmChangeListener: OnAlarmChangeListener) : RecyclerView.Adapter<NotificationListAdapter.ViewHolder>(){
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView)  {
+    inner class ViewHolder(val listItemView: View) : RecyclerView.ViewHolder(listItemView)  {
         // Your holder should contain and initialize a member variable
         // for any view that will be set as you render a row
         val alarmNameTextView = itemView.findViewById<TextView>(R.id.alarm_context_name)
         var alarmSwitch = itemView.findViewById<Switch>(R.id.alarm_on_off)
         val alarmTimeTextView = itemView.findViewById<TextView>(R.id.alarm_time)
         val alarmRepeat = itemView.findViewById<TextView>(R.id.alarm_repeat)//TODO: check types later
+        fun onClickDelete(alarm: Alarm, onClickListener: OnAlarmChangeListener) {
+            listItemView.setOnLongClickListener {
+                onClickListener.onItemClicked(alarm)
+                return@setOnLongClickListener true
+            }
+        }
+        fun onSwitchClicked(alarm: Alarm, onClickListener: OnAlarmChangeListener) {
+            alarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+                alarm.isOn = isChecked
+                onClickListener.onSwitchChecked(alarm)
+            }
+        }
     }
 
     // ... constructor and member variables
@@ -83,13 +95,15 @@ class NotificationListAdapter(private val mAlarm: List<Alarm>) : RecyclerView.Ad
         val repeatDescriptionTextView = viewHolder.alarmRepeat
         descriptionTextView.setText(alarm.notification_msg)
         switch.setChecked(alarm.isOn)
-        time.setText(alarm.call_time_string)
+        time.setText(alarm.displayCallTime)
         repeatDescriptionTextView.setText(if (alarm.repeatState == true) "Once" else "Repeating")
-        switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            mAlarm.elementAt(position).isOn = isChecked
-        }
+
+        viewHolder.onClickDelete(alarm, alarmChangeListener)
+        viewHolder.onSwitchClicked(alarm, alarmChangeListener)
     }
+
     override fun getItemCount(): Int {
         return mAlarm.size
     }
 }
+

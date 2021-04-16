@@ -11,8 +11,8 @@ class Pet(var name: String,
           var chip: String,
           var vetAddress: String,
           var notes: String,
-          var image: Int): Parcelable {
-    fun updateObject(name: String, species: String, breed: String, neuter: String, chip: String, vetAddress: String, notes: String, image: Int) {
+          var image: String): Parcelable {
+    fun updateObject(name: String, species: String, breed: String, neuter: String, chip: String, vetAddress: String, notes: String, image: String) {
         this.name = name
         this.species = species
         this.breed = breed

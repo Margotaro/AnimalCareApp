@@ -1,68 +1,111 @@
 package com.example.petproject2
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.Switch
+import android.widget.ImageButton
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.security.Timestamp
-import java.util.*
+import com.example.petproject2.database.AppDatabase
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NotificationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class NotificationFragment : Fragment() {
-    lateinit var notifications: MutableList<Alarm>
+const val DIALOG_FRAGMENT  = 2
+private const val ALARM_CREATE = 1
+
+
+class NotificationFragment : Fragment(), OnAlarmChangeListener {
+    var notifications: MutableList<Alarm> = mutableListOf()
+    lateinit var database: AppDatabase
+    lateinit var rvNotifications: RecyclerView
+
+    var petId: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-        val database: DataBase = DatabaseDummy()
-        notifications = database.getAlarmList("owner1", "pet1")//TODO: make it make sense
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_alarm, container, false)
-        val rvNotifications = view.findViewById<View>(R.id.rvNotification) as RecyclerView
-        val notificationAdapter = NotificationListAdapter(notifications)
-        rvNotifications.adapter = notificationAdapter
-        rvNotifications.layoutManager = LinearLayoutManager(context)
+        val view = inflater.inflate(R.layout.fragment_alarm, container, false)
+        rvNotifications = view.findViewById<View>(R.id.rvNotification) as RecyclerView
 
+        rvNotifications.layoutManager = LinearLayoutManager(context)
+        rvNotifications.adapter = NotificationListAdapter(notifications, this)
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NotificationFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NotificationFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val createNotificationButton = view?.findViewById<ImageButton>(R.id.buttonAddAlarm)
+        createNotificationButton?.setOnClickListener {
+            //getting data from activity to fragment
+            val intent = Intent(context, CreateNotificationActivity::class.java)
+            intent.putExtra("PetId", petId)
+
+            startActivityForResult(intent, ALARM_CREATE)
+        }
+    }
+    fun show(petId: Int) {
+        this.petId = petId
+        rvNotifications.adapter = NotificationListAdapter(loadFromDatabase(), this)
+    }
+
+    fun loadFromDatabase(): MutableList<Alarm>{
+        context?.let {
+            database = AppDatabase.getDatabase(it)
+            petId?.let {
+                var notificationcollection = database.notificationDao().findPetNotifications(it)
+                return notificationcollection?.bar?.map{ notificationEntity -> Alarm(
+                    notificationEntity
+                )
+                }?.toMutableList() ?: mutableListOf<Alarm>()
+            }
+            return mutableListOf<Alarm>()
+        }
+        return mutableListOf<Alarm>()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == ALARM_CREATE) {
+            database.let {
+                if(petId == null) return@let
+                val petEntityList = it.notificationDao().findPetNotifications(petId!!)?.bar
+                val alarmList = petEntityList?.map{ notificationEntity -> Alarm(notificationEntity) }?.toMutableList()
+                alarmList?.let {
+                    notifications = it
+                }?.run {
+                    notifications = mutableListOf()
+                }
+
+            }
+        } else if (requestCode == DIALOG_FRAGMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                data?.getParcelableExtra<Alarm>("Alarm")?.generateNotificationEntity()?.let {
+                    alarm ->
+                    database.notificationDao().delete(alarm)
+                    rvNotifications.adapter = NotificationListAdapter(loadFromDatabase(), this)
                 }
             }
+        }
+    }
+
+    override fun onItemClicked(alarm: Alarm) {
+
+        val confirmDeleteDialog = ConfirmNotificationDeleteDialogFragment()
+        confirmDeleteDialog.setTargetFragment(this, 0)
+        val bundle = Bundle()
+        bundle.putParcelable("Alarm", alarm)
+        confirmDeleteDialog.arguments = bundle
+        confirmDeleteDialog.show(parentFragmentManager, "dialog")
+    }
+
+    override fun onSwitchChecked(alarm: Alarm) {
+        database.notificationDao().update(alarm.generateNotificationEntity())
     }
 }

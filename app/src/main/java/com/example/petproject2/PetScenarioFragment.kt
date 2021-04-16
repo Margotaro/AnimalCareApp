@@ -1,10 +1,11 @@
 package com.example.petproject2
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentManager
 
 interface PetScenarioFragment {
-    fun show()
+    fun show(petId: Int)
     fun hide()
 }
 
@@ -16,7 +17,7 @@ class MedicalScenario(fragmentManager: FragmentManager) : PetScenarioFragment {
         medicalFragment = fragmentManager.findFragmentById(R.id.medicalFragment) as MedicalFragment
     }
 
-    override fun show() {
+    override fun show(petId: Int) {
         medicalFragment.view?.visibility = View.VISIBLE
     }
 
@@ -32,7 +33,7 @@ class DocumentScenario(fragmentManager: FragmentManager): PetScenarioFragment {
     init {
         documentsFragment = fragmentManager.findFragmentById(R.id.documentFragment) as DocumentsFragment
     }
-    override fun show() {
+    override fun show(petId: Int) {
         documentsFragment.view?.visibility = View.VISIBLE
     }
 
@@ -48,8 +49,9 @@ class NotificationScenario(fragmentManager: FragmentManager): PetScenarioFragmen
     init {
         notificationFragment = fragmentManager.findFragmentById(R.id.alarmFragment) as NotificationFragment
     }
-    override fun show() {
+    override fun show(petId: Int) {
         notificationFragment.view?.visibility = View.VISIBLE
+        notificationFragment.show(petId)
     }
 
     override fun hide() {

@@ -3,7 +3,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Account(var name: String, var email: String, var telephone_number: String, var avatar: Int):
+class Account(var name: String, var email: String, var telephone_number: String, var avatar: String):
     Parcelable {
     var pets: MutableList<Pet> = mutableListOf()
     fun findPet(name: String): Pet {

@@ -1,7 +1,6 @@
 package com.example.petproject2
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.petproject2.database.PetEntity
 
-internal class ImageListAdapter internal constructor(context: Context, private val resource: Int, private val itemList: List<PetEntity>) : ArrayAdapter<ImageListAdapter.ItemHolder>(context, resource) {
+internal class ImageListAdapter internal constructor(
+    context: Context,
+    private val resource: Int,
+    private val itemList: List<PetEntity>
+) : ArrayAdapter<ImageListAdapter.ItemHolder>(context, resource) {
 
 
     override fun getCount(): Int {
@@ -37,7 +40,8 @@ internal class ImageListAdapter internal constructor(context: Context, private v
             holder.icon?.setImageResource(R.drawable.newpet)
         } else {
             holder.name?.text = itemList[position].name
-            holder.icon?.setImageResource(itemList[position].image)
+            val packageName = context.packageName
+            holder.icon?.setImageResource(context.getResources().getIdentifier(itemList[position].image, "drawable", packageName))
         }
 
         return convertView!!

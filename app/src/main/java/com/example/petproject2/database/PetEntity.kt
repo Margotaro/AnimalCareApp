@@ -16,5 +16,5 @@ data class PetEntity(
     @ColumnInfo(name = "chip")  var chip: String,
     @ColumnInfo(name = "vetAddress")  var vetAddress: String,
     @ColumnInfo(name = "notes")  var notes: String,
-    @ColumnInfo(name = "image")  var image: Int
+    @ColumnInfo(name = "image")  var image: String
 )

@@ -8,5 +8,7 @@ import androidx.room.PrimaryKey
 data class NotificationEntity (
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "petId") val petId: Int,
-    @ColumnInfo(name = "text") var text: String
+    @ColumnInfo(name = "notificationMsg") var notificationMsg: String,
+    @ColumnInfo(name = "callTimestamp") var callTimestamp: Long,
+    @ColumnInfo(name = "isOn") var isOn: Boolean
 )

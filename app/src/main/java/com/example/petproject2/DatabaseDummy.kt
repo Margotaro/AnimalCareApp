@@ -1,5 +1,7 @@
 package com.example.petproject2
 
+import android.graphics.drawable.Drawable
+
 class DatabaseDummy: DataBase {
     private var accounts: MutableList<Account> = mutableListOf()
     private var registerData: MutableList<Triple<String, String, Account>> = mutableListOf()
@@ -10,7 +12,7 @@ class DatabaseDummy: DataBase {
             "Margarita",
             "melifarofrei@gmail.com",
             "+380950416302",
-            R.drawable.avatar
+            "avatar"
         )
         acc1.pets.addAll(
             listOf(
@@ -22,7 +24,7 @@ class DatabaseDummy: DataBase {
                     "2333456",
                     "Rozumovska, 10/12",
                     "Is quite friendly pal, at least when full",
-                    R.drawable.bear
+                    "bear"
                 ),
                 Pet(
                     "Bagheera",
@@ -32,7 +34,7 @@ class DatabaseDummy: DataBase {
                     "2333457",
                     "Rozumovska, 10/12",
                     "Do not touch",
-                    R.drawable.puma
+                    "puma"
                 ),
                 Pet(
                     "Mime",
@@ -42,7 +44,7 @@ class DatabaseDummy: DataBase {
                     "2333457",
                     "Rozumovska, 10/12",
                     "Has horns",
-                    R.drawable.deers
+                    "deers"
                 ),
                 Pet(
                     "Flash Slothmore",
@@ -52,16 +54,18 @@ class DatabaseDummy: DataBase {
                     "2333457",
                     "Rozumovska, 10/12",
                     "Is slow",
-                    R.drawable.lenivec
+                    "lenivec"
                 )
             )
         )
+        var r: Drawable? = null
+
         accounts.add(acc1)
         registerData.add(Triple<String, String, Account>("login", "password", accounts[0]))
         notifications = mutableListOf(
-                Alarm("alarm 1 test text", 1586822400L * 1000L, 1, true, true),
-                Alarm("alarm 2 test text", 1586822400L * 1000L, 1, false, true),
-                Alarm("alarm 3 test text", 1586822400L * 1000L, 1, true, false))
+                Alarm(1, "alarm 1 test text", 1586822400L * 1000L, 1, true, true),
+                Alarm(2, "alarm 2 test text", 1586822400L * 1000L, 1, false, true),
+                Alarm(3, "alarm 3 test text", 1586822400L * 1000L, 1, true, false))
     }
     override fun register(
         login: String,
@@ -71,7 +75,7 @@ class DatabaseDummy: DataBase {
         telephone_number: String
     ): Boolean {
 
-        var newAccount = Account(name, email, telephone_number, 0)
+        var newAccount = Account(name, email, telephone_number, "avatar")
         for(data in registerData) {
             if(data.first == login && data.second == password) {
                 return false
@@ -92,7 +96,7 @@ class DatabaseDummy: DataBase {
         return false
     }
 
-    override fun updateAccount(name: String, email: String, telephone_number: String, avatar: Int):Boolean {
+    override fun updateAccount(name: String, email: String, telephone_number: String, avatar: String):Boolean {
         loggedInInstance?.let{
             it.updateObject(name, email, telephone_number)
             return true
@@ -108,7 +112,7 @@ class DatabaseDummy: DataBase {
         chip: String,
         vet_address: String,
         notes: String,
-        avatar: Int
+        avatar: String
     ):Boolean  {
         loggedInInstance?.pets?.let{
             it.add(Pet(name, species, breed, neuter, chip, vet_address, notes, avatar))//to do: make sure all other lists also change
@@ -125,7 +129,7 @@ class DatabaseDummy: DataBase {
         chip: String,
         vet_address: String,
         notes: String,
-        avatar: Int
+        avatar: String
     ): Boolean  {
         loggedInInstance?.findPet(name)?.let {
             it.updateObject(name, species, breed, neuter, chip, vet_address, notes, avatar)
@@ -134,7 +138,7 @@ class DatabaseDummy: DataBase {
         return true
     }
 
-    override fun getPetTileCollection(): MutableList<Pair<String, Int>> {
+    override fun getPetTileCollection(): MutableList<Pair<String, String>> {
         return loggedInInstance?.pets?.map { Pair(it.name, it.image) }!!.toMutableList()
     }
     override fun getAccount(name: String): Account {

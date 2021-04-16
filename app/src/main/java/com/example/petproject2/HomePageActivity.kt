@@ -21,7 +21,7 @@ class HomePageActivity : Activity() {
 //        var adapter = ImageListAdapter(this, R.layout.owner_page_pet_icon, petTileCollection)
 //        petGrid.adapter = adapter
 //
-//        petGrid.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
+//        petGrid.onItemClickListener = AdapterView.OnAlarmChangeListener { parent, v, position, id ->
 //            var intent = Intent(this, PetPageActivity::class.java)
 //            intent.putExtra("Name", petTileCollection?.elementAt(position)?.first)
 //            intent.putExtra("Avatar", petTileCollection?.elementAt(position)?.second.toString())
@@ -60,9 +60,11 @@ class HomePageActivity : Activity() {
 
             val petName = petList.getOrNull(position)?.name ?: return@OnItemClickListener
             val petImageResource = petList.getOrNull(position)?.image ?: return@OnItemClickListener
+            val petId = petList.getOrNull(position)?.id ?: return@OnItemClickListener
 
             intent.putExtra("Name", petName)
-            intent.putExtra("Avatar", petImageResource.toString())
+            intent.putExtra("Avatar", petImageResource)
+            intent.putExtra("PetId", petId)
 
             startActivity(intent)
         }
@@ -73,5 +75,6 @@ class HomePageActivity : Activity() {
         val notifications = pets.firstOrNull()?.id?.let {
             database.notificationDao().findPetNotifications(it)
         }
+        val r = 2 + 2
     }
 }

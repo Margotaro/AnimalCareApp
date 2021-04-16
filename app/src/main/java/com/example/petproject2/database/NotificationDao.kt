@@ -21,12 +21,17 @@ interface NotificationDao {
     @Delete
     fun delete(user: NotificationEntity)
 
+    @Update
+    fun update(user: NotificationEntity)
+
     @Query("SELECT count(*) from notificationentity")
     fun count() : Int
 
-    @Query("SELECT petentity.*, notificationentity.* FROM notificationentity INNER JOIN petentity ON petentity.id = notificationentity.petId WHERE petentity.id = :pet")
+    @Transaction
+    @Query("SELECT * FROM notificationentity INNER JOIN petentity ON petentity.id = notificationentity.petId WHERE petentity.id = :pet")
     fun findPetNotifications(pet: Int): PetNotifications?
 
     @Query("SELECT * FROM notificationentity")
     fun getAll(): List<NotificationEntity>
+
 }
