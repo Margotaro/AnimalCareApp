@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 private const val ARG_PET_ID = "PetId"
 
-class DocumentsFragment : Fragment(), PetScenarioSliderFragment {
+class RatioFragment : Fragment(), PetScenarioSliderFragment {
     private var petId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,11 +23,7 @@ class DocumentsFragment : Fragment(), PetScenarioSliderFragment {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_documents, container, false)
-    }
-
-    override fun onStart() {
-        super.onStart()
+        return inflater.inflate(R.layout.fragment_ratio, container, false)
     }
 
     override fun showContent(petId: Int) {
@@ -37,11 +33,10 @@ class DocumentsFragment : Fragment(), PetScenarioSliderFragment {
     override fun getFragmentObject(): Fragment {
         return this
     }
-
     companion object {
         @JvmStatic
         fun newInstance(petId: Int) =
-            DocumentsFragment().apply {
+            RatioFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PET_ID, petId)
                 }

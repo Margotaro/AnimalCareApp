@@ -10,21 +10,24 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Update
 import com.example.petproject2.database.AppDatabase
 
 
 const val DIALOG_FRAGMENT  = 2
 private const val ALARM_CREATE = 1
+private const val ARG_PET_ID = "PetId"
 
-
-class NotificationFragment : Fragment(), OnAlarmChangeListener {
-    var notifications: MutableList<Alarm> = mutableListOf()
+class NotificationFragment : Fragment(), OnAlarmChangeListener, PetScenarioSliderFragment {
     lateinit var database: AppDatabase
     lateinit var rvNotifications: RecyclerView
+    private var petId: Int? = null
 
-    var petId: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            petId = it.getInt(ARG_PET_ID)
+        }
     }
 
     override fun onCreateView(
@@ -35,13 +38,12 @@ class NotificationFragment : Fragment(), OnAlarmChangeListener {
         rvNotifications = view.findViewById<View>(R.id.rvNotification) as RecyclerView
 
         rvNotifications.layoutManager = LinearLayoutManager(context)
-        rvNotifications.adapter = NotificationListAdapter(notifications, this)
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)  {
         super.onActivityCreated(savedInstanceState)
-        val createNotificationButton = view?.findViewById<ImageButton>(R.id.buttonAddAlarm)
+        val createNotificationButton = view.findViewById<ImageButton>(R.id.buttonAddAlarm)
         createNotificationButton?.setOnClickListener {
             //getting data from activity to fragment
             val intent = Intent(context, CreateNotificationActivity::class.java)
@@ -49,10 +51,15 @@ class NotificationFragment : Fragment(), OnAlarmChangeListener {
 
             startActivityForResult(intent, ALARM_CREATE)
         }
+        petId?.let{
+            showContent(it)
+        }?.run{
+            showContent(1)
+        }
     }
-    fun show(petId: Int) {
+    override fun showContent(petId: Int) {
         this.petId = petId
-        rvNotifications.adapter = NotificationListAdapter(loadFromDatabase(), this)
+        RefreshNotificationListView()
     }
 
     fun loadFromDatabase(): MutableList<Alarm>{
@@ -78,9 +85,7 @@ class NotificationFragment : Fragment(), OnAlarmChangeListener {
                 val petEntityList = it.notificationDao().findPetNotifications(petId!!)?.bar
                 val alarmList = petEntityList?.map{ notificationEntity -> Alarm(notificationEntity) }?.toMutableList()
                 alarmList?.let {
-                    notifications = it
-                }?.run {
-                    notifications = mutableListOf()
+                    RefreshNotificationListView()
                 }
 
             }
@@ -89,7 +94,7 @@ class NotificationFragment : Fragment(), OnAlarmChangeListener {
                 data?.getParcelableExtra<Alarm>("Alarm")?.generateNotificationEntity()?.let {
                     alarm ->
                     database.notificationDao().delete(alarm)
-                    rvNotifications.adapter = NotificationListAdapter(loadFromDatabase(), this)
+                    RefreshNotificationListView()
                 }
             }
         }
@@ -107,5 +112,21 @@ class NotificationFragment : Fragment(), OnAlarmChangeListener {
 
     override fun onSwitchChecked(alarm: Alarm) {
         database.notificationDao().update(alarm.generateNotificationEntity())
+    }
+
+    override fun getFragmentObject(): Fragment {
+        return this
+    }
+    fun RefreshNotificationListView() {
+        rvNotifications.adapter = NotificationListAdapter(loadFromDatabase(), this)
+    }
+    companion object {
+        @JvmStatic
+        fun newInstance(petId: Int) =
+            NotificationFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_PET_ID, petId)
+                }
+            }
     }
 }

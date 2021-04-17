@@ -8,13 +8,15 @@ import android.view.ViewGroup
 
 private const val ARG_PET_ID = "PetId"
 
-class DocumentsFragment : Fragment(), PetScenarioSliderFragment {
+class HabitFragment : Fragment(), PetScenarioSliderFragment {
     private var petId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            petId = it.getInt(ARG_PET_ID)
+            arguments?.let {
+                petId = it.getInt(ARG_PET_ID)
+            }
         }
     }
 
@@ -23,25 +25,19 @@ class DocumentsFragment : Fragment(), PetScenarioSliderFragment {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_documents, container, false)
-    }
-
-    override fun onStart() {
-        super.onStart()
+        return inflater.inflate(R.layout.fragment_habit, container, false)
     }
 
     override fun showContent(petId: Int) {
 
     }
-
     override fun getFragmentObject(): Fragment {
         return this
     }
-
     companion object {
         @JvmStatic
         fun newInstance(petId: Int) =
-            DocumentsFragment().apply {
+            HabitFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PET_ID, petId)
                 }
