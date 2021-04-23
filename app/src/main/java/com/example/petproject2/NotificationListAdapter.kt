@@ -7,49 +7,6 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
 
-/*
-internal class AlarmListAdapter internal constructor(context: Context, private val resource: Int, private val itemList: List<String>) : ArrayAdapter<ImageListAdapter.ItemHolder>(context, resource) {
-
-    override fun getCount(): Int {
-        return this.itemList.size + 1
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
-
-
-        val holder: ItemHolder
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(resource, null)
-            holder = ItemHolder()
-            holder.name = convertView.findViewById(R.id.textView)
-            holder.icon = convertView.findViewById(R.id.icon)
-            convertView.tag = holder
-        } else {
-            holder = convertView.tag as ItemHolder
-        }
-
-        if (position >= itemList.size) {
-            holder.name?.text = "Add"
-            holder.icon?.setImageResource(R.drawable.newpet)
-        } else {
-            holder.name?.text = itemList[position].name
-            holder.icon?.setImageResource(itemList[position].image)
-        }
-
-        return convertView!!
-    }
-
-    internal class ItemHolder {
-        var name: TextView? = null
-        var icon: ImageView? = null
-    }
-/*
-    override fun add('object': ItemHolder?) {
-        super.insert('object', itemList!!.size - 1)
-    }*/
-}
-*/
 class NotificationListAdapter(private val mAlarm: List<Alarm>, val alarmChangeListener: OnAlarmChangeListener) : RecyclerView.Adapter<NotificationListAdapter.ViewHolder>(){
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Update
 import com.example.petproject2.database.AppDatabase
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 const val DIALOG_FRAGMENT  = 2
@@ -43,7 +44,7 @@ class NotificationFragment : Fragment(), OnAlarmChangeListener, PetScenarioSlide
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)  {
         super.onActivityCreated(savedInstanceState)
-        val createNotificationButton = view.findViewById<ImageButton>(R.id.buttonAddAlarm)
+        val createNotificationButton = view.findViewById<FloatingActionButton>(R.id.buttonAddAlarm)
         createNotificationButton?.setOnClickListener {
             //getting data from activity to fragment
             val intent = Intent(context, CreateNotificationActivity::class.java)
@@ -53,8 +54,6 @@ class NotificationFragment : Fragment(), OnAlarmChangeListener, PetScenarioSlide
         }
         petId?.let{
             showContent(it)
-        }?.run{
-            showContent(1)
         }
     }
     override fun showContent(petId: Int) {

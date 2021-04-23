@@ -8,11 +8,16 @@ import androidx.room.RoomDatabase
 import com.example.petproject2.R
 import java.util.*
 
-@Database(entities = arrayOf(PetEntity::class, NotificationEntity::class), version = 1)
+@Database(entities = arrayOf(
+        PetEntity::class,
+        NotificationEntity::class,
+        IllnessTypeEntity::class,
+        VetNoteEntity::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun petDao(): PetDao
     abstract fun notificationDao(): NotificationDao
-
+    abstract fun ilnessDao(): IllnessDao
+    abstract fun vetNoteDao(): VetNoteDao
 
 
     companion object {
@@ -40,6 +45,8 @@ abstract class AppDatabase : RoomDatabase() {
             val database = getDatabase(context)
             val currentPetCount = database.petDao().count()
             val currentNotificationCount = database.notificationDao().count()
+            val currentIlnessTypeCount = database.ilnessDao().count()
+            val currentVetNoteCount = database.vetNoteDao().count()
 
             if (currentPetCount == 0) {
                 val pets = arrayOf(
@@ -103,6 +110,32 @@ abstract class AppDatabase : RoomDatabase() {
                 )
 
                 database.notificationDao().insertAll(*notifications)
+            }
+
+            if(currentVetNoteCount == 0) {
+                val vetNotes = arrayOf(
+                        VetNoteEntity(0, 1, "Note 1", "Doctor 1", "Med 1, med 2, med 3", 1586822400L * 1000L),
+                        VetNoteEntity(0, 2, "Note 2", "Doctor 2", "Med 1, med 2, med 3", 1586822400L * 1000L),
+                        VetNoteEntity(0, 2, "Note 3", "Doctor 1", "Med 1, med 2, med 3", 1586822400L * 1000L),
+                        VetNoteEntity(0, 3, "Note 4", "Doctor 4", "Med 1, med 2, med 3", 1586822400L * 1000L),
+                        VetNoteEntity(0, 4, "Note 5", "Doctor 1", "Med 1, med 2, med 3", 1586822400L * 1000L)
+                )
+
+                database.vetNoteDao().insertAll(*vetNotes)
+            }
+
+            if(currentIlnessTypeCount == 0) {
+                val illnesses = arrayOf(
+                        IllnessTypeEntity(0, 1, "tuberculosis"),
+                        IllnessTypeEntity(0, 1, "scoliosis"),
+                        IllnessTypeEntity(0, 2, "cavities"),
+                        IllnessTypeEntity(0, 3, "cavities"),
+                        IllnessTypeEntity(0, 3, "helminthiasis"),
+                        IllnessTypeEntity(0, 4, "cavities"),
+                        IllnessTypeEntity(0, 4, "flea")
+                )
+
+                database.ilnessDao().insertAll(*illnesses)
             }
         }
     }

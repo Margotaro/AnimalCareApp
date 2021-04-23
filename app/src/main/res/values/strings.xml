@@ -4,4 +4,8 @@
     <string name="dialog_delete_notification">Are you sure you want to delete alarm?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string-array name="SortMedicalRecords">
+        <item>Chronologically</item>
+        <item>By illness</item>
+    </string-array>
 </resources>

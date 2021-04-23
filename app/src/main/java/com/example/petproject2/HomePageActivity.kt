@@ -16,23 +16,6 @@ class HomePageActivity : Activity() {
         imageView.setImageResource(R.drawable.avatar)
 
         loadFromDatabase()
-
-//        val petTileCollection = Model.db.getPetTileCollection()
-//        var adapter = ImageListAdapter(this, R.layout.owner_page_pet_icon, petTileCollection)
-//        petGrid.adapter = adapter
-//
-//        petGrid.onItemClickListener = AdapterView.OnAlarmChangeListener { parent, v, position, id ->
-//            var intent = Intent(this, PetPageActivity::class.java)
-//            intent.putExtra("Name", petTileCollection?.elementAt(position)?.first)
-//            intent.putExtra("Avatar", petTileCollection?.elementAt(position)?.second.toString())
-//            if(position + 1 == petTileCollection?.size)
-//            {
-//                startActivity(Intent(this, CreatePetPage::class.java))
-//            }
-//            else {
-//                startActivity(intent)
-//            }
-//        }
     }
 
     fun displayAnimals(animals: Array<PetEntity>) {
