@@ -7,35 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/layout_displayMedicalRecords"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_chrono_sort_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Spinner
-            android:id="@+id/spinnerSortMedRecords"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/SortMedicalRecords"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMedicalRecords"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintVertical_bias="0.0" />
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonAddMedRecord"
-        android:contentDescription="Add new medical record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/add"
-        app:layout_anchor="@id/layout_displayMedicalRecords"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:layout_height="match_parent"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

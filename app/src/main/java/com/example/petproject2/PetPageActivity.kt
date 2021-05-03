@@ -18,8 +18,6 @@ class PetPageActivity : FragmentActivity() {
     private lateinit var fragmentlist: Array<PetScenarioSliderFragment>
     var petId: Int = 1
 
-    private val scenarios = PetPageScenarios()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pet_page)
@@ -30,7 +28,6 @@ class PetPageActivity : FragmentActivity() {
         val oldSavedIntent = getIntent()
         petId = oldSavedIntent.getIntExtra("PetId", -1)
 
-        //scenarios.onStart(supportFragmentManager, petId)
         avatarImageView.setImageResource(this.getResources().getIdentifier(oldSavedIntent.getStringExtra("Avatar"), "drawable", packageName))
         petNameView.setText(oldSavedIntent.getStringExtra("Name"))
 
