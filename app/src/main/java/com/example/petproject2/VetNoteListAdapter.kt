@@ -17,8 +17,14 @@ class VetNoteListAdapter(
         var vetNoteTimeTextView = itemView.findViewById<TextView>(R.id.time_vetNote)
         fun onClickDelete(note: VetNote, onClickListener: OnVetNoteChangeListener) {
             listItemView.setOnLongClickListener {
-                onClickListener.onItemClicked(note)
+                onClickListener.onItemLongClicked(note)
                 return@setOnLongClickListener true
+            }
+        }
+        fun onClickOpen(note: VetNote, onClickListener: OnVetNoteChangeListener) {
+            listItemView.setOnClickListener {
+                onClickListener.onItemClicked(note)
+                return@setOnClickListener
             }
         }
     }
@@ -44,6 +50,7 @@ class VetNoteListAdapter(
         time.setText(note.displayDiagnosisDate)
 
         viewHolder.onClickDelete(note, vetNoteChangeListener)
+        viewHolder.onClickOpen(note, vetNoteChangeListener)
     }
 
     override fun getItemCount(): Int {

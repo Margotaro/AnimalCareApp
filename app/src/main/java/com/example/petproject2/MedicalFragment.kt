@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.petproject2.database.VetNote
 
 
 private const val ARG_PET_ID = "PetId"
@@ -36,9 +37,13 @@ class MedicalFragment : Fragment() {
         petId?.let{
             val petIdNonNull: Int = it
             activity?.let{
-                scenarios.onStart(childFragmentManager, petIdNonNull)
+                scenarios.onStart(childFragmentManager, petIdNonNull)// H E R E
             }
         }
+    }
+
+    fun openVetNote(vetNote: VetNote) {
+        scenarios.onOpenVetNoteRequest(childFragmentManager, vetNote)
     }
     companion object {
         @JvmStatic

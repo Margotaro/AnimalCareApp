@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="25dp"
+    android:paddingEnd="25dp"
+    tools:context=".CreateVetNoteFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/doctorNameLayout"
+        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVetNoteDate">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/doctorName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Doctor Name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/prescribedMedicamentsLayout"
+        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vetVisitNotesLayout"
+        android:layout_marginTop="40dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/prescribedMedicaments"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Prescribed Medicaments" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vetVisitNotesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doctorNameLayout"
+        android:layout_marginTop="40dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/vetVisitNotes"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Notes" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_disease_chip_container_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="com.example.petproject2.EntryChipDiseaseFragment"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/prescribedMedicamentsLayout" />
+
+    <ImageButton
+        android:id="@+id/buttonConfirmVetNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/baseline_done_24"
+        android:background="#00000000"
+        app:layout_constraintStart_toStartOf="@+id/textViewVetNoteDate"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonCancelVetNote"
+        android:layout_width="wrap_content"
+        android:background="#00000000"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_close_20"
+        app:layout_constraintEnd_toEndOf="@+id/doctorNameLayout"
+        app:layout_constraintHorizontal_bias="0.914"
+        app:layout_constraintStart_toEndOf="@+id/buttonConfirmVetNote"
+        app:layout_constraintTop_toTopOf="@+id/buttonConfirmVetNote" />
+
+    <TextView
+        android:id="@+id/textViewVetNoteDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
+        android:text="Time text view"
+        app:layout_constraintStart_toStartOf="@+id/doctorNameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/buttonConfirmVetNote" />
+</androidx.constraintlayout.widget.ConstraintLayout>

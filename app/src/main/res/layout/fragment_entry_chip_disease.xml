@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewDisease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="Disease: "
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="CC"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/textViewDisease"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#00000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDisease" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupDisease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCC"
+        app:layout_constraintStart_toEndOf="@+id/textViewCC"
+        app:layout_constraintTop_toTopOf="@+id/textViewCC">
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <HorizontalScrollView
+        android:id="@+id/chipGroupDiseaseHorizontalView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDisease"
+        app:layout_constraintStart_toEndOf="@+id/textViewDisease"
+        app:layout_constraintTop_toTopOf="@+id/textViewDisease"
+        app:layout_constraintVertical_bias="0.62">
+    </HorizontalScrollView>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:foregroundTint="@color/teal_700"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDisease">
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:minWidth="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/chipGroupDiseaseHorizontalView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_min="32dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/chipGroupDisease"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chipGroupDisease"
+        app:layout_constraintTop_toTopOf="@+id/chipGroupDisease">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
