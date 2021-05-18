@@ -10,7 +10,14 @@ import com.example.petproject2.database.VetNote
 
 private const val ARG_PET_ID = "PetId"
 
-class MedicalFragment : Fragment() {
+interface NoteViewClickListener {
+    fun onNoteClicked(vetNote: VetNote)
+    fun onIllnessTypeClicked(illness: String)
+    fun onSpinnerIllnessOptionClicked()
+    fun onSpinnerChronoOptionClicked()
+}
+
+class MedicalFragment : Fragment(), NoteViewClickListener {
     private var petId: Int? = null
     private val scenarios = MedicalFragmentScenarios()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +44,29 @@ class MedicalFragment : Fragment() {
         petId?.let{
             val petIdNonNull: Int = it
             activity?.let{
-                scenarios.onStart(childFragmentManager, petIdNonNull)// H E R E
+                scenarios.onStart(childFragmentManager, petIdNonNull, this)
             }
         }
     }
 
-    fun openVetNote(vetNote: VetNote) {
-        scenarios.onOpenVetNoteRequest(childFragmentManager, vetNote)
+    override fun onNoteClicked(vetNote: VetNote) {
+        scenarios.noteWasClicked(vetNote)
     }
+
+    override fun onIllnessTypeClicked(illness: String) {
+        context?.let {
+            scenarios.illnessOptionWasClicked(illness, it)
+        }
+    }
+
+    override fun onSpinnerIllnessOptionClicked() {
+        scenarios.spinnerByIllnessWasClicked()
+    }
+
+    override fun onSpinnerChronoOptionClicked() {
+        scenarios.spinnerChronologicallyWasClicked()
+    }
+
     companion object {
         @JvmStatic
         fun newInstance(petId: Int) =

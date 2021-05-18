@@ -9,4 +9,8 @@
         <item>Chronologically</item>
         <item>By illness</item>
     </string-array>
+    <string-array name="SortMedicalRecords2">
+        <item>By illness</item>
+        <item>Chronologically</item>
+    </string-array>
 </resources>

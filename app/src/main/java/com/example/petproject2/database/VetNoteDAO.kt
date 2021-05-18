@@ -2,6 +2,14 @@ package com.example.petproject2.database
 
 import androidx.room.*
 
+class CompleteVetNote {
+    @Embedded
+    var vetNote: VetNoteEntity? = null
+
+    @Relation(parentColumn = "id", entityColumn = "vetNoteId")
+    var bar: List<IllnessTypeEntity>? = null
+}
+
 @Dao
 interface VetNoteDao {
 
@@ -17,9 +25,14 @@ interface VetNoteDao {
     @Query("SELECT count(*) from vetnoteentity")
     fun count() : Int
 
-    @Query("SELECT * FROM vetnoteentity INNER JOIN petentity ON petentity.id = vetnoteentity.petId WHERE petentity.id = :pet")
-    fun findPetMedNotes(pet: Int): List<VetNoteEntity>
+    @Transaction
+    @Query("SELECT * FROM vetnoteentity " +
+            "WHERE vetnoteentity.petId = :pet")
+    fun findPetMedNotes(pet: Int): List<CompleteVetNote>
 
-    @Query("SELECT * FROM vetnoteentity INNER JOIN petentity ON petentity.id = vetnoteentity.petId INNER JOIN illnesstypeentity ON illnesstypeentity.vetNoteId = vetnoteentity.id WHERE petentity.id = :pet AND illnesstypeentity.illnessName = :illness")
-    fun findPetMedNotesByIllness(pet: Int, illness: String): List<VetNoteEntity>
+    @Query("SELECT * FROM illnesstypeentity " +
+            "INNER JOIN vetnoteentity ON " +
+            "vetnoteentity.id = illnesstypeentity.vetNoteId " +
+            "WHERE vetnoteentity.petId = :pet AND illnesstypeentity.illnessName = :illness")
+    fun findPetMedNotesByIllness(pet: Int, illness: String): List<CompleteVetNote>
 }

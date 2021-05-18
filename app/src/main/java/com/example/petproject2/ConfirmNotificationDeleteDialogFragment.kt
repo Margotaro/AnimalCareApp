@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.petproject2.database.AppDatabase
+import com.example.petproject2.database.VetNote
 
 
 class ConfirmNotificationDeleteDialogFragment : DialogFragment() {

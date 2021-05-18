@@ -6,20 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import com.example.petproject2.database.VetNote
 
 
 class VetNoteFragment : Fragment() {
     private var vetNote: VetNote? = null
     private lateinit var vetNoteTimeTextView: TextView
+    private var vetNoteTimeText: String = "Time"
     private lateinit var vetNoteDoctorNameTextView: TextView
+    private var vetNoteDoctorNameText: String = "Doctor Name"
     private lateinit var vetNoteTextView: TextView
+    private var vetNoteText: String = "Note contents"
     private lateinit var vetNoteMedPrescriptionTextView: TextView
+    private var vetNoteMedPrescriptionText: String = "Medications"
+    private lateinit var vetNoteDiseaseListTextView: TextView
+    private var vetNoteDiseaseListText: String = "Disease"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                parentFragmentManager.popBackStack()
+            }
+        })
     }
 
     override fun onCreateView(
@@ -28,20 +38,28 @@ class VetNoteFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_vet_note, container, false)
-        val vetNoteTimeTextView = root.findViewById<TextView>(R.id.vetNoteTimeText)
-        val vetNoteDoctorNameTextView = root.findViewById<TextView>(R.id.vetNoteDoctorNameText)
-        val vetNoteTextView = root.findViewById<TextView>(R.id.vetNoteText)
-        val vetNoteMedPrescriptionTextView = root.findViewById<TextView>(R.id.vetNotePrescribedMedText)
+        vetNoteTimeTextView = root.findViewById<TextView>(R.id.vetNoteTimeText)
+        vetNoteDoctorNameTextView = root.findViewById<TextView>(R.id.vetNoteDoctorNameText)
+        vetNoteTextView = root.findViewById<TextView>(R.id.vetNoteText)
+        vetNoteMedPrescriptionTextView = root.findViewById<TextView>(R.id.vetNotePrescribedMedText)
+        vetNoteDiseaseListTextView = root.findViewById(R.id.textDisease)
 
+        vetNoteTimeTextView.setText(vetNoteTimeText)
+        vetNoteDoctorNameTextView.setText(vetNoteDoctorNameText)
+        vetNoteTextView.setText(vetNoteText)
+        vetNoteMedPrescriptionTextView.setText(vetNoteMedPrescriptionText)
+        vetNoteDiseaseListTextView.setText(vetNoteDiseaseListText)
         return root
     }
 
-    fun SetContents(vetNote: VetNote) {
-        vetNoteTimeTextView.setText(vetNote.displayDiagnosisDate)
-        vetNoteDoctorNameTextView.setText(vetNote.vetName)
-        vetNoteTextView.setText(vetNote.diagnosisNote)
-        vetNoteMedPrescriptionTextView.setText(vetNote.prescribedMedication)
+    fun setContents(vetNote: VetNote) {
+        vetNoteTimeText = vetNote.displayDiagnosisDate
+        vetNoteDoctorNameText = vetNote.vetName
+        vetNoteText = vetNote.diagnosisNote
+        vetNoteMedPrescriptionText = vetNote.prescribedMedication
+        vetNoteDiseaseListText = vetNote.getIllnessBarString()
     }
+
 
     companion object {
         @JvmStatic

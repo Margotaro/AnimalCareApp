@@ -54,7 +54,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doctorNameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_disease_chip_container_view"
         android:layout_marginTop="40dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/vetVisitNotes"
@@ -73,7 +73,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/prescribedMedicamentsLayout" />
+        app:layout_constraintTop_toBottomOf="@id/doctorNameLayout" />
 
     <ImageButton
         android:id="@+id/buttonConfirmVetNote"

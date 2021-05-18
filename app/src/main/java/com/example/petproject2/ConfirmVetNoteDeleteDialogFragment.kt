@@ -22,7 +22,7 @@ class ConfirmVetNoteDeleteDialogFragment : DialogFragment() {
                             val note = it.getParcelable<VetNote>("Note")
                             note?.let{
                                 val intent = Intent()
-                                intent.putExtra("Note", note)
+                                intent.putExtra("VetNote", note)
                                 targetFragment?.onActivityResult(DIALOG_FRAGMENT, Activity.RESULT_OK, intent)
                             }
                         }

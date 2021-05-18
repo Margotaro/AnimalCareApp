@@ -6,26 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="bottom">
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="@dimen/img_width"
-        android:layout_height="@dimen/img_height"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/txv_padding"
-        android:textColor="@color/purple_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="bottom|center" />
+        <View
+            android:id="@+id/myRectangleView"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/black"
+            app:layout_anchor="@id/icon"
+            app:layout_anchorGravity="bottom|center"
+            android:alpha="0.5"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            app:layout_anchor="@id/myRectangleView"
+            app:layout_anchorGravity="bottom|center"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

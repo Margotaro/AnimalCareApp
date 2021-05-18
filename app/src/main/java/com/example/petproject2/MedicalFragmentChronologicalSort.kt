@@ -1,20 +1,22 @@
 package com.example.petproject2
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petproject2.database.AppDatabase
+import com.example.petproject2.database.CompleteVetNote
 import com.example.petproject2.database.VetNote
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
@@ -30,13 +32,9 @@ class MedicalFragmentChronologicalSort : Fragment(), OnVetNoteChangeListener  {
     lateinit var rvMedRecords: RecyclerView
     lateinit var addMedRecordButton: FloatingActionButton
 
-    private lateinit var customAlertDialogView : View
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
-    private lateinit var doctorNameField: TextInputEditText
-    private lateinit var vetVisitNotesField: TextInputEditText
-    private lateinit var prescribedMedicamentsField: TextInputEditText
-    private lateinit var diseaseChipGroup: FragmentContainerView
-    private lateinit var currentDate: TextView
+    private lateinit var parentFragment: NoteViewClickListener
+    private lateinit var spinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +54,8 @@ class MedicalFragmentChronologicalSort : Fragment(), OnVetNoteChangeListener  {
         )
         rvMedRecords = rootView.findViewById<View>(R.id.rvMedicalRecords) as RecyclerView
         addMedRecordButton = rootView.findViewById(R.id.buttonAddMedRecord)
+        spinner = rootView.findViewById(R.id.spinnerSortMedRecords)
+
         rvMedRecords.layoutManager = LinearLayoutManager(context)
         context?.let {
             materialAlertDialogBuilder = MaterialAlertDialogBuilder(it)
@@ -69,66 +69,58 @@ class MedicalFragmentChronologicalSort : Fragment(), OnVetNoteChangeListener  {
         petId?.let{
             showContent(it)
         }
-        addMedRecordButton?.setOnClickListener {
+        addMedRecordButton.setOnClickListener {
             context?.let {
                 val intent = Intent(context, CreateVetNoteActivity::class.java)
                 intent.putExtra("PetId", petId)
                 startActivityForResult(intent, VET_NOTE_CREATE)
             }
         }
+
+        val listener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 1) {
+                    parentFragment.onSpinnerIllnessOptionClicked()  // TODO
+                    spinner.setSelection(0)
+                }
+            }
+
+        }
+        spinner.post { spinner.onItemSelectedListener = listener }
     }
 
-    private fun launchCustomAlertDialog() {
-        doctorNameField = customAlertDialogView.findViewById(R.id.doctorName)
-        vetVisitNotesField = customAlertDialogView.findViewById(R.id.vetVisitNotes)
-        prescribedMedicamentsField = customAlertDialogView.findViewById(R.id.prescribedMedicaments)
-        diseaseChipGroup = customAlertDialogView.findViewById(R.id.fragment_disease_chip_container_view)
-
-        val diseaseChipFragmentInstance = EntryChipDiseaseFragment.newInstance()
-        childFragmentManager.beginTransaction().add(R.id.fragment_disease_chip_container_view, diseaseChipFragmentInstance).commit()
-
-        val date_n: String = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date())
-        // Building the Alert dialog using materialAlertDialogBuilder instance
-        materialAlertDialogBuilder.setView(customAlertDialogView)
-            .setTitle("New vet note")
-            .setMessage(date_n)
-            .setPositiveButton("Add") { dialog, _ ->
-                val doctorName = doctorNameField.text.toString()
-                val vetVisitNotes = vetVisitNotesField.text.toString()
-                val prescribedMedicaments = prescribedMedicamentsField.text.toString()
-
-                /**
-                 * Do as you wish with the data here --
-                 * Download/Clone the repo from my Github to see the entire implementation
-                 * using the link provided at the end of the article.
-                 */
-
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
+    override fun onSaveInstanceState(outState: Bundle) { }
 
     fun showContent(petId: Int) {
         this.petId = petId
-        RefreshMedRecordListView()
+        RefreshMedRecordListView(context)
     }
 
-    fun RefreshMedRecordListView() {
-        rvMedRecords.adapter = VetNoteListAdapter(loadFromDatabase(), this)
+    fun RefreshMedRecordListView(cnt: Context? = null) {
+        rvMedRecords.adapter = VetNoteListAdapter(loadFromDatabase(cnt), this)
     }
 
-    fun loadFromDatabase(): MutableList<VetNote>{
-        context?.let {
+    fun loadFromDatabase(cnt: Context? = null): MutableList<VetNote>{
+        cnt?.let {
             database = AppDatabase.getDatabase(it)
             petId?.let {
-                val medreccollection = database.vetNoteDao().findPetMedNotes(it)
-                return medreccollection.map{ vetNoteEntity -> VetNote(
-                    vetNoteEntity
-                )
+                petId ->
+                val medreccollection = database.vetNoteDao().findPetMedNotes(petId)
+                return medreccollection.mapNotNull {
+                    completeVetNote ->
+                    completeVetNote.bar?.let {
+                        bar ->
+                        completeVetNote.vetNote?.let {
+                            vetNote ->
+                            VetNote(
+                                    vetNote, bar
+                            )
+                        }
+                    }
                 }.toMutableList()
             }
             return mutableListOf()
@@ -146,23 +138,27 @@ class MedicalFragmentChronologicalSort : Fragment(), OnVetNoteChangeListener  {
     }
 
     override fun onItemClicked(vetNote: VetNote) {
-
-        val ft: FragmentTransaction = childFragmentManager.beginTransaction()
-        val createVetNoteFragment = VetNoteFragment.newInstance()
-        ft.add(R.id.fragment_chrono_sort_container, createVetNoteFragment)
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack(null)
-        ft.commit()
+        parentFragment.onNoteClicked(vetNote)
     }
+    fun setParentFragment(fragment: NoteViewClickListener){
+        parentFragment = fragment
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == VET_NOTE_CREATE) {
-            database.let {
-                if(petId == null) return@let
-                //TODO: refresh note list
+        if (requestCode == DIALOG_FRAGMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                val t = data?.getParcelableExtra<VetNote>("VetNote")
+                val y = t?.generateVetNoteEntity()
+                data?.getParcelableExtra<VetNote>("VetNote")?.generateVetNoteEntity()?.let {
+                    vetnote ->
+                    database.vetNoteDao().delete(vetnote)
+                    RefreshMedRecordListView()
+                }
             }
         }
     }
+
     companion object {
         @JvmStatic
         fun newInstance(petId: Int) =
