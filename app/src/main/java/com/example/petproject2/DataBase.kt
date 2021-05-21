@@ -22,6 +22,6 @@ interface DataBase {
                      avatar: String): Boolean
     fun getAccount(name: String): Account
     fun getAnimal(ownerName: String, petName: String): Pet
-    fun getPetTileCollection(): MutableList<Pair<String, String>>?
+    fun getPetTileCollection(): MutableList<Pair<String, String?>>?
     fun getAlarmList(ownerName: String, petName: String): MutableList<Alarm>
 }

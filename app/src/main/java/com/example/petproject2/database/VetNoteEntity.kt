@@ -11,6 +11,6 @@ data class VetNoteEntity(
         @ColumnInfo(name = "petId") val petId: Int,
         @ColumnInfo(name = "diagnosisNote") var diagnosisNote: String,
         @ColumnInfo(name = "vetName") var vetName: String,
-        @ColumnInfo(name = "prescribedMedication") var prescribedMedication: String,
+        @ColumnInfo(name = "prescribedMedication") var prescribedMedication: String?,
         @ColumnInfo(name = "diagnosisDate") var diagnosisDate: Long
         )

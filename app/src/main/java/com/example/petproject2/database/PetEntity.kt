@@ -10,11 +10,11 @@ import kotlinx.android.parcel.Parcelize
 data class PetEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "name") var name: String,
-    @ColumnInfo(name = "species") var species: String,
-    @ColumnInfo(name = "breed")  var breed: String,
-    @ColumnInfo(name = "neuter")  var neuter: String,
-    @ColumnInfo(name = "chip")  var chip: String,
-    @ColumnInfo(name = "vetAddress")  var vetAddress: String,
-    @ColumnInfo(name = "notes")  var notes: String,
-    @ColumnInfo(name = "image")  var image: String
+    @ColumnInfo(name = "species") var species: String?,
+    @ColumnInfo(name = "breed")  var breed: String?,
+    @ColumnInfo(name = "neuter")  var neuter: String?,
+    @ColumnInfo(name = "chip")  var chip: String?,
+    @ColumnInfo(name = "vetAddress")  var vetAddress: String?,
+    @ColumnInfo(name = "notes")  var notes: String?,
+    @ColumnInfo(name = "image")  var image: String?
 )

@@ -1,5 +1,7 @@
 package com.example.petproject2
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -28,7 +30,16 @@ class PetPageActivity : FragmentActivity() {
         val oldSavedIntent = getIntent()
         petId = oldSavedIntent.getIntExtra("PetId", -1)
 
-        avatarImageView.setImageResource(this.getResources().getIdentifier(oldSavedIntent.getStringExtra("Avatar"), "drawable", packageName))
+        val avatarUri = Uri.parse(oldSavedIntent.getStringExtra("Avatar"))
+        val avatarPlaceholderId = this.getResources().getIdentifier("pet_placeholder1", "drawable", packageName)
+        var selectedImage = BitmapFactory.decodeResource(this.getResources(), avatarPlaceholderId)
+        if(oldSavedIntent.getStringExtra("Avatar") != null) {
+            val avatarUri = Uri.parse(oldSavedIntent.getStringExtra("Avatar"))
+            this.contentResolver.openInputStream(avatarUri)?.let { stream ->
+                selectedImage = BitmapFactory.decodeStream(stream)
+            }
+        }
+        avatarImageView.setImageBitmap(selectedImage)
         petNameView.setText(oldSavedIntent.getStringExtra("Name"))
 
 

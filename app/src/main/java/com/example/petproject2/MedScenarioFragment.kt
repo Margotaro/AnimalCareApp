@@ -24,7 +24,6 @@ class ChronoSortScenario(petId: Int, cf: FragmentManager) : MedScenarioFragment 
         chronoSortFragment = MedicalFragmentChronologicalSort.newInstance(petId)
         ft.add(R.id.fragment_chrono_sort_container, chronoSortFragment)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack("chronological add")
         ft.setReorderingAllowed(true)
         ft.commit()
         Log.i("TAG", "Chrono fragment was created")
@@ -35,7 +34,6 @@ class ChronoSortScenario(petId: Int, cf: FragmentManager) : MedScenarioFragment 
         cf.popBackStack()
         ft.replace(R.id.fragment_chrono_sort_container, chronoSortFragment)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack("chronological replace")
         ft.setReorderingAllowed(true)
         ft.commit()
         Log.i("TAG", "Chrono fragment has replaced")
@@ -85,7 +83,6 @@ class IllnessListScenario(petId: Int, cf: FragmentManager) : MedScenarioFragment
         val ft = cf.beginTransaction()
         ft.replace(R.id.fragment_chrono_sort_container, illnessListFragment)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack("illness fragment add")
         ft.setReorderingAllowed(true)
         ft.commit()
         Log.i("TAG", "Illness fragment was created")
@@ -96,7 +93,6 @@ class IllnessListScenario(petId: Int, cf: FragmentManager) : MedScenarioFragment
         cf.popBackStack()
         ft.replace(R.id.fragment_chrono_sort_container, illnessListFragment)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack("Illness fragment has replaced")
         ft.setReorderingAllowed(true)
         ft.commit()
         Log.i("TAG", "Illness fragment has replaced")
@@ -117,7 +113,6 @@ class MedicalFragmentFilteredSortScenario(petId: Int, cf: FragmentManager) : Med
         val ft = cf.beginTransaction()
         ft.replace(R.id.fragment_chrono_sort_container, filteredNotesFragment)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack("Illness fragment add")
         ft.setReorderingAllowed(true)
         ft.commit()
         //Log.i("TAG", "Filtered fragment was created")
@@ -128,7 +123,6 @@ class MedicalFragmentFilteredSortScenario(petId: Int, cf: FragmentManager) : Med
         cf.popBackStack()
         ft.replace(R.id.fragment_chrono_sort_container, filteredNotesFragment)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack("Filtered fragment has replaced")
         ft.setReorderingAllowed(true)
         ft.commit()
         Log.i("TAG", "Filtered fragment has replaced")
@@ -139,6 +133,6 @@ class MedicalFragmentFilteredSortScenario(petId: Int, cf: FragmentManager) : Med
     }
 
     fun filterContentsByIllness(illnessName: String, cnt: Context) {
-        filteredNotesFragment.filterContentsByIllness(illnessName, cnt)
+        filteredNotesFragment.setFilterContentsByIllness(illnessName, cnt)
     }
 }

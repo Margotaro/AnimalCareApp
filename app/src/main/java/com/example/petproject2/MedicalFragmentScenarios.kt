@@ -49,5 +49,6 @@ class MedicalFragmentScenarios {
     }
     fun illnessOptionWasClicked(illnessName: String, cnt: Context) {
         setNewActiveScenario(filteredVetNotes)
+        filteredVetNotes.filterContentsByIllness(illnessName, cnt)
     }
 }

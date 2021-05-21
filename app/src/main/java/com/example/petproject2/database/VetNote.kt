@@ -13,7 +13,7 @@ class VetNote(
     val petId: Int,
     var diagnosisNote: String,
     var vetName: String,
-    var prescribedMedication: String
+    var prescribedMedication: String?
 ): Parcelable {
     var diagnosisDate: Long = 0
     var displayDiagnosisDate: String = ""

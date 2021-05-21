@@ -14,8 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_gravity="bottom|center" />
+            android:scaleType="centerCrop"
+            android:layout_gravity="bottom|center"
+            />
         <View
             android:id="@+id/myRectangleView"
             android:layout_width="match_parent"
@@ -24,6 +25,14 @@
             app:layout_anchor="@id/icon"
             app:layout_anchorGravity="bottom|center"
             android:alpha="0.5"/>
+        <View
+            android:id="@+id/myRectanglePlaceholderView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            app:layout_anchor="@id/icon"
+            app:layout_anchorGravity="bottom|center"
+            android:alpha="0"/>
         <TextView
             android:id="@+id/textView"
             android:layout_width="100dp"

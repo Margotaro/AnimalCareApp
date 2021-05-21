@@ -1,7 +1,6 @@
 package com.example.petproject2
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.view.LayoutInflater
@@ -12,12 +11,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.petproject2.database.PetEntity
 
-internal class ImageListAdapter internal constructor(
+internal class DocumentListAdapter internal constructor(
     context: Context,
     private val resource: Int,
     private val itemList: List<PetEntity>
-) : ArrayAdapter<ImageListAdapter.ItemHolder>(context, resource) {
+) : ArrayAdapter<DocumentListAdapter.ItemHolder>(context, resource) {
 
+    internal class ItemHolder {
+        var name: TextView? = null
+        var icon: ImageView? = null
+        var rectanglePadding: View? = null
+        var placeholderShadowing: View? = null
+    }
 
     override fun getCount(): Int {
         return this.itemList.size + 1
@@ -27,10 +32,10 @@ internal class ImageListAdapter internal constructor(
         var convertView = convertView
 
 
-        val holder: ItemHolder
+        val holder: ImageListAdapter.ItemHolder
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(resource, null)
-            holder = ItemHolder()
+            holder = ImageListAdapter.ItemHolder()
             holder.name = convertView.findViewById(R.id.textView)
             holder.icon = convertView.findViewById(R.id.icon)
             holder.rectanglePadding = convertView.findViewById(R.id.myRectangleView)
@@ -38,7 +43,7 @@ internal class ImageListAdapter internal constructor(
 
             convertView.tag = holder
         } else {
-            holder = convertView.tag as ItemHolder
+            holder = convertView.tag as ImageListAdapter.ItemHolder
         }
 
         if (position >= itemList.size) {
@@ -63,16 +68,5 @@ internal class ImageListAdapter internal constructor(
         }
 
         return convertView!!
-    }
-
-    internal class ItemHolder {
-        var name: TextView? = null
-        var icon: ImageView? = null
-        var rectanglePadding: View? = null
-        var placeholderShadowing: View? = null
-    }
-
-    override fun add(`object`: ItemHolder?) {
-        super.insert(`object`, itemList!!.size - 1)
     }
 }

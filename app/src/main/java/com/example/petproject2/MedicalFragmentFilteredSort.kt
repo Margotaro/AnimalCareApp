@@ -32,15 +32,12 @@ class MedicalFragmentFilteredSort : Fragment(), OnVetNoteChangeListener  {
     lateinit var database: AppDatabase
     lateinit var rvMedRecords: RecyclerView
     private lateinit var parentFragment: NoteViewClickListener
+    private lateinit var cnt: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             petId = it.getInt(ARG_PET_ID)
-            illnessName = it.getString(ARG_INIT_ILLNESS_NAME)
-        }
-        activity?.applicationContext?.let {
-            rvMedRecords = RecyclerView(it)
         }
     }
 
@@ -68,16 +65,26 @@ class MedicalFragmentFilteredSort : Fragment(), OnVetNoteChangeListener  {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        filterContentsByIllness()
+    }
     fun showContent(petId: Int, illnessName: String) {
         this.petId = petId
         this.illnessName = illnessName
         context?.let { context ->
-            RefreshMedRecordListView(context, illnessName)
+            RefreshMedRecordListView()
         }
     }
 
-    fun RefreshMedRecordListView(cnt: Context, illnessName: String) {
-        rvMedRecords.adapter = VetNoteListAdapter(loadFromDatabase(cnt, illnessName), this)
+    fun RefreshMedRecordListView() {
+        this.cnt?.let {
+            cnt ->
+            this.illnessName?.let {
+                illnessName ->
+                rvMedRecords.adapter = VetNoteListAdapter(loadFromDatabase(cnt, illnessName), this)
+            }
+        }
     }
 
     fun loadFromDatabase(cnt: Context, illnessName: String): MutableList<VetNote>{
@@ -117,8 +124,12 @@ class MedicalFragmentFilteredSort : Fragment(), OnVetNoteChangeListener  {
         parentFragment = fragment
     }
 
-    fun filterContentsByIllness(illnessName: String, cnt: Context) {
-        RefreshMedRecordListView(cnt, illnessName)
+    fun setFilterContentsByIllness(illnessName: String, cnt: Context) {
+        this.illnessName = illnessName
+        this.cnt = cnt
+    }
+    fun filterContentsByIllness() {
+        RefreshMedRecordListView()
     }
 
     companion object {
@@ -127,7 +138,6 @@ class MedicalFragmentFilteredSort : Fragment(), OnVetNoteChangeListener  {
             MedicalFragmentFilteredSort().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PET_ID, petId)
-                    putString(ARG_INIT_ILLNESS_NAME, illnessName)
                 }
             }
     }

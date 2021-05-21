@@ -153,7 +153,7 @@ class MedicalFragmentChronologicalSort : Fragment(), OnVetNoteChangeListener  {
                 data?.getParcelableExtra<VetNote>("VetNote")?.generateVetNoteEntity()?.let {
                     vetnote ->
                     database.vetNoteDao().delete(vetnote)
-                    RefreshMedRecordListView()
+                    RefreshMedRecordListView(context)
                 }
             }
         }

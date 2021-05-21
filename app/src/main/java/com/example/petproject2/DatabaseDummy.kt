@@ -138,8 +138,11 @@ class DatabaseDummy: DataBase {
         return true
     }
 
-    override fun getPetTileCollection(): MutableList<Pair<String, String>> {
-        return loggedInInstance?.pets?.map { Pair(it.name, it.image) }!!.toMutableList()
+    override fun getPetTileCollection(): MutableList<Pair<String, String?>> {
+        loggedInInstance?.let {
+            return it.pets.map { Pair(it.name, it.image) }.toMutableList()
+        }
+        return mutableListOf()
     }
     override fun getAccount(name: String): Account {
         return searchAccountsFor(name)

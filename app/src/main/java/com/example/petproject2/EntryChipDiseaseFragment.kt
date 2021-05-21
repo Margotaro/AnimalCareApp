@@ -1,5 +1,6 @@
 package com.example.petproject2
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,7 @@ class EntryChipDiseaseFragment : Fragment() {
     private fun addChipToGroup(person: String, chipGroup: ChipGroup) {
         val chip = Chip(context)
         chip.text = person
+        chip.setTextColor(Color.WHITE)
         chip.isCloseIconVisible = true
         context?.let {
             chip.chipBackgroundColor = getColorStateList(it, R.color.design_default_color_secondary)

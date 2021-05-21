@@ -56,7 +56,11 @@ class VetNoteFragment : Fragment() {
         vetNoteTimeText = vetNote.displayDiagnosisDate
         vetNoteDoctorNameText = vetNote.vetName
         vetNoteText = vetNote.diagnosisNote
-        vetNoteMedPrescriptionText = vetNote.prescribedMedication
+        var prscrM = ""
+        vetNote.prescribedMedication?.let {
+            prscrM = it
+        }
+        vetNoteMedPrescriptionText = prscrM
         vetNoteDiseaseListText = vetNote.getIllnessBarString()
     }
 

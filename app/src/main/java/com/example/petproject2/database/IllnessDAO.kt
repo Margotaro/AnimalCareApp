@@ -6,7 +6,7 @@ import androidx.room.*
 interface IllnessDao {
 
     @Insert
-    fun insertAll(vararg users: IllnessTypeEntity)
+    fun insertAll(vararg users: IllnessTypeEntity) : List<Long>
 
     @Delete
     fun delete(user: IllnessTypeEntity)

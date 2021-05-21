@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.petproject2">
 
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/launchercustomicon"
@@ -10,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetProject2"
         android:windowSoftInputMode="adjustPan|adjustResize">
-        <activity android:name=".measurements.MeasurementActivity"></activity>
+        <activity android:name=".measurements.MeasurementRecordsListActivity"></activity>
+        <activity android:name=".measurements.MeasurementActivity" />
         <activity android:name=".CreateVetNoteActivity" />
         <activity android:name=".CreateNotificationActivity" />
         <activity android:name=".CreatePetPage" />
@@ -25,9 +30,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.SET_ALARM" />
 
 </manifest>

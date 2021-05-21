@@ -13,7 +13,3 @@ class Illness( val id: Int,
                 ite.vetNoteId,
                 ite.illnessName)
 }
-/*
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "vetNoteId") val vetNoteId: Int,
-    @ColumnInfo(name = "illnessName") val illnessName: String*/

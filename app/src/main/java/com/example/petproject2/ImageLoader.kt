@@ -9,6 +9,7 @@ import java.io.FileNotFoundException
 
 class ImageLoader(private val activity: Activity) {
     private val RESULT_LOAD_IMAGE = 1
+    private var imageUri: Uri? = null
 
     fun runRequest() {
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
@@ -19,7 +20,7 @@ class ImageLoader(private val activity: Activity) {
     fun handleRequest(reqCode: Int, resultCode: Int, data: Intent): Bitmap? {
         if (resultCode == Activity.RESULT_OK) {
             try {
-                val imageUri: Uri? = data.data
+                imageUri = data.data
                 imageUri?.let { uri ->
                     activity.contentResolver.openInputStream(uri)?.let { stream ->
                         val selectedImage = BitmapFactory.decodeStream(stream)
@@ -32,6 +33,31 @@ class ImageLoader(private val activity: Activity) {
             }
         }
         return null
+    }
+
+    fun getImageUriString() : String? {
+        var returnvalue : String? = null
+        imageUri?.let {
+            returnvalue = it.toString()
+        }
+        return returnvalue
+    }
+
+    fun convertStringUriToBitmap(strUri: String) : Bitmap? {
+        try {
+            val lImageUri = Uri.parse(strUri)
+            lImageUri?.let { uri ->
+                activity.contentResolver.openInputStream(uri)?.let { stream ->
+                    val selectedImage = BitmapFactory.decodeStream(stream)
+                    return selectedImage
+                }
+            } ?: run {
+                return null
+            }
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            return null
+        }
     }
 }
 

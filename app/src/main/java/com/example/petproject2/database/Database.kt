@@ -1,6 +1,8 @@
 package com.example.petproject2.database
 
+import android.content.ContentResolver
 import android.content.Context
+import android.net.Uri
 import android.text.format.DateFormat
 import androidx.room.Database
 import androidx.room.Room
@@ -40,7 +42,18 @@ abstract class AppDatabase : RoomDatabase() {
 
             return Companion.database!!
         }
+        fun getPetUriStringFromDrawable(imageName: String, context: Context) : String {
+            val resources = context.resources
 
+            val packageName = context.packageName
+            val imageId = context.getResources().getIdentifier(imageName, "drawable", packageName)
+            return Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(resources.getResourcePackageName(imageId))
+                .appendPath(resources.getResourceTypeName(imageId))
+                .appendPath(resources.getResourceEntryName(imageId))
+                .build().toString()
+        }
         fun populateDatabaseIfNeeded(context: Context) {
             val database = getDatabase(context)
             val currentPetCount = database.petDao().count()
@@ -59,7 +72,7 @@ abstract class AppDatabase : RoomDatabase() {
                             "2333456",
                             "Rozumovska, 10/12",
                             "Is quite friendly pal, at least when full",
-                            "bear"
+                            getPetUriStringFromDrawable("bear", context)
                     ),
                     PetEntity(
                             0,
@@ -70,7 +83,7 @@ abstract class AppDatabase : RoomDatabase() {
                             "2333457",
                             "Rozumovska, 10/12",
                             "Do not touch",
-                            "puma"
+                            getPetUriStringFromDrawable("puma", context)
                     ),
                     PetEntity(
                             0,
@@ -81,7 +94,7 @@ abstract class AppDatabase : RoomDatabase() {
                             "2333457",
                             "Rozumovska, 10/12",
                             "Has horns",
-                            "deers"
+                            getPetUriStringFromDrawable("deers", context)
                     ),
                     PetEntity(
                             0,
@@ -92,7 +105,7 @@ abstract class AppDatabase : RoomDatabase() {
                             "2333457",
                             "Rozumovska, 10/12",
                             "Is slow",
-                            "lenivec"
+                            getPetUriStringFromDrawable("lenivec", context)
                     )
                 )
 

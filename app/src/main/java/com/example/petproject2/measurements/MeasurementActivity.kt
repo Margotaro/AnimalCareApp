@@ -1,16 +1,21 @@
 package com.example.petproject2.measurements
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.example.petproject2.R
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MeasurementActivity : Activity() {
@@ -25,9 +30,9 @@ class MeasurementActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_measurement)
 
-        val intent = getIntent()
+        val oldIntent = getIntent()
         val defaultMeasurement = Measurement(arrayOf(MeasurementRecord(0.0, Date())), "error", "error")
-        intent.getSerializableExtra("measurement")?.let {
+        oldIntent.getSerializableExtra("measurement")?.let {
             (it as? Measurement)?.let {
                 measurement = it
             } ?: run {
@@ -49,7 +54,22 @@ class MeasurementActivity : Activity() {
         val firstDate = measurement.values.first().date.time
         val chart = findViewById<LineChart>(R.id.chart)
         chart.setBackgroundColor(Color.WHITE);
-        val dataSet = LineDataSet(measurement.values.map{ Entry((it.date.time.toFloat() - firstDate) / 3600 / 24, it.value.toFloat()) }, "data set")
+        val dataSet = LineDataSet(measurement.values.map{ Entry(it.date.time.toFloat() - firstDate, it.value.toFloat()) }, "data set")
         chart.data = LineData(dataSet)
+        chart.xAxis.valueFormatter = object: IAxisValueFormatter {
+            override fun getFormattedValue(value: Float, axis: AxisBase?): String {
+                val date = Date((firstDate + value).toLong())
+                return SimpleDateFormat("dd/MMM hh:mm").format(date)
+            }
+        }
+
+        val editButton = findViewById<FloatingActionButton>(R.id.editRecordButton)
+        if (measurement != defaultMeasurement) {
+            editButton.setOnClickListener({
+                val intent = Intent(this, MeasurementRecordsListActivity::class.java)
+                intent.putExtra("measurement", measurement)
+                startActivity(intent)
+            })
+        }
     }
 }

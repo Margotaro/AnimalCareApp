@@ -14,7 +14,7 @@ class CompleteVetNote {
 interface VetNoteDao {
 
     @Insert
-    fun insertAll(vararg users: VetNoteEntity)
+    fun insertAll(vararg users: VetNoteEntity) : List<Long>
 
     @Delete
     fun delete(user: VetNoteEntity)
