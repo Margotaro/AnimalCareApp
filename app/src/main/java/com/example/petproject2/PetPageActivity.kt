@@ -49,8 +49,13 @@ class PetPageActivity : FragmentActivity() {
 
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = "${(position + 1)}"
+            if(position != 3)
+                setTabIcon(position, tab)
+            else
+                tab.text = "${(position + 1)}"
+
         }.attach()
+        tabLayout.tabIconTint = null
     /*
         Scenario handwritten code
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -61,6 +66,38 @@ class PetPageActivity : FragmentActivity() {
         fragmentlist = arrayOf(DocumentsFragment.newInstance(petId), MedicalFragment.newInstance(petId), NotificationFragment.newInstance(petId), HabitFragment.newInstance(petId), RatioFragment.newInstance(petId), MeasurementsFragment.newInstance(petId))*/
     }
 
+    private fun setTabIcon(position: Int, tab: TabLayout.Tab) {
+        if(position == 0)
+        {
+            val id = resources.getIdentifier("slider_icon_document", "drawable", this.packageName)
+            tab.setIcon(id)
+            return
+        }
+        if(position == 1)
+        {
+            val id = resources.getIdentifier("slider_icon_medical_pills", "drawable", this.packageName)
+            tab.setIcon(id)
+            return
+        }
+        if(position == 2)
+        {
+            val id = resources.getIdentifier("slider_icon_notification", "drawable", this.packageName)
+            tab.setIcon(id)
+            return
+        }
+        if(position == 4)
+        {
+            val id = resources.getIdentifier("slider_icon_diet", "drawable", this.packageName)
+            tab.setIcon(id)
+            return
+        }
+        if(position == 5)
+        {
+            val id = resources.getIdentifier("slider_icon_measurement", "drawable", this.packageName)
+            tab.setIcon(id)
+            return
+        }
+    }
     override fun onStart() {
         super.onStart()
     }

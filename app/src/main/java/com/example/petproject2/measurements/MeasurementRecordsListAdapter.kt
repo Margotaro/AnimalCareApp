@@ -9,6 +9,7 @@ import com.example.petproject2.R
 
 class MeasurementRecordsListAdapter(
     val measurement: Measurement,
+    val delegate: MeasurementRecordListItemViewControllerDelegate,
     val context: Context,
     val layoutInflater: LayoutInflater
 ) : BaseAdapter() {
@@ -28,12 +29,9 @@ class MeasurementRecordsListAdapter(
     override fun getView(index: Int, convertView: View?, group: ViewGroup?): View {
         val resultView = convertView ?:
             layoutInflater.inflate(R.layout.measurement_record_list_view_item, group, false)
-        val viewController = MeasurementRecordListItemViewController(resultView, measurement.values[index])
+        MeasurementRecordListItemViewController(resultView, measurement.values[index], delegate)
         return resultView
     }
 
 }
 
-class MeasurementRecordListItemViewController(rootView: View, data: MeasurementRecord) {
-
-}
