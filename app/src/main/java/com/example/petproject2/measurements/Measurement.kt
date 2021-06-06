@@ -10,7 +10,7 @@ class Measurement(private var _values: Array<MeasurementRecord>, val type: Strin
     val values get() = _values
 
     fun remove(record: MeasurementRecord) {
-        _values = _values.filter { it.equals(record) }.toTypedArray()
+        _values = _values.filter { !it.equals(record) }.toTypedArray()
     }
 
     fun add(record: MeasurementRecord) {

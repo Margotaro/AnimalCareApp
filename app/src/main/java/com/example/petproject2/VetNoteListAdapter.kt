@@ -15,6 +15,7 @@ class VetNoteListAdapter(
     inner class ViewHolder(val listItemView: View) : RecyclerView.ViewHolder(listItemView)  {
         val vetNoteTitleTextView = itemView.findViewById<TextView>(R.id.title_vetNote)
         var vetNoteTimeTextView = itemView.findViewById<TextView>(R.id.time_vetNote)
+        val vetNoteDoctorNameTextView = itemView.findViewById<TextView>(R.id.docName_vetNote)
         fun onClickDelete(note: VetNote, onClickListener: OnVetNoteChangeListener) {
             listItemView.setOnLongClickListener {
                 onClickListener.onItemLongClicked(note)
@@ -46,8 +47,10 @@ class VetNoteListAdapter(
         // Set item views based on your views and data model
         val title = viewHolder.vetNoteTitleTextView
         val time = viewHolder.vetNoteTimeTextView
-        title.setText(note.diagnosisNote)
+        val docName = viewHolder.vetNoteDoctorNameTextView
+        title.setText("Нотаток")
         time.setText(note.displayDiagnosisDate)
+        docName.setText(note.vetName)
 
         viewHolder.onClickDelete(note, vetNoteChangeListener)
         viewHolder.onClickOpen(note, vetNoteChangeListener)

@@ -7,7 +7,7 @@ import com.example.petproject2.R
 import kotlinx.android.synthetic.main.measurement_record_list_view_item.view.*
 import java.text.SimpleDateFormat
 
-interface MeasurementRecordListItemViewControllerDelegate {
+interface   MeasurementRecordListItemViewControllerDelegate {
     fun recordItemWantsToBeRemoved(record: MeasurementRecordListItemViewController)
     fun recordItemWantToBeEdited(record: MeasurementRecordListItemViewController, callback: (() -> Unit))
 }

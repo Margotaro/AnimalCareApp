@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import java.io.FileNotFoundException
 
 class ImageLoader(private val activity: Activity) {
@@ -12,15 +13,15 @@ class ImageLoader(private val activity: Activity) {
     private var imageUri: Uri? = null
 
     fun runRequest() {
-        val photoPickerIntent = Intent(Intent.ACTION_PICK)
+        val photoPickerIntent = Intent(Intent.ACTION_OPEN_DOCUMENT )
         photoPickerIntent.type = "image/*"
         activity.startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE)
     }
 
-    fun handleRequest(reqCode: Int, resultCode: Int, data: Intent): Bitmap? {
+    fun handleRequest(reqCode: Int, resultCode: Int, imageUri: Uri?): Bitmap? {
         if (resultCode == Activity.RESULT_OK) {
             try {
-                imageUri = data.data
+               this.imageUri = imageUri
                 imageUri?.let { uri ->
                     activity.contentResolver.openInputStream(uri)?.let { stream ->
                         val selectedImage = BitmapFactory.decodeStream(stream)

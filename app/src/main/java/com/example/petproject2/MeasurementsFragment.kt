@@ -31,6 +31,7 @@ class MeasurementsFragment : Fragment(), PetScenarioSliderFragment {
         val rootView = inflater.inflate(R.layout.fragment_measurements, container, false)
         listView = rootView.findViewById<ListView>(R.id.measurementRecordsList)
         addButton = rootView.findViewById(R.id.buttonAddMeasurement)
+
         return rootView
     }
 

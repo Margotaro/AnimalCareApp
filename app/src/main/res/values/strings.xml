@@ -5,6 +5,11 @@
     <string name="vetnote_delete_notification">Are you sure you want to delete this note?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="edit_record_value">Edit record value</string>
+    <string name="measurement_value">Measurement value</string>
+    <string name="change_date">Change date</string>
+    <string name="date">Date</string>
+    <string name="create_measurement_type">Create measurement type</string>
     <string-array name="SortMedicalRecords">
         <item>Chronologically</item>
         <item>By illness</item>
@@ -13,4 +18,5 @@
         <item>By illness</item>
         <item>Chronologically</item>
     </string-array>
+    <string name="add_measurement_record">Add measurement record</string>
 </resources>

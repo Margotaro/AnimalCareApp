@@ -6,6 +6,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import com.example.petproject2.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
@@ -59,7 +60,7 @@ class MeasurementActivity : Activity() {
         chart.xAxis.valueFormatter = object: IAxisValueFormatter {
             override fun getFormattedValue(value: Float, axis: AxisBase?): String {
                 val date = Date((firstDate + value).toLong())
-                return SimpleDateFormat("dd/MMM hh:mm").format(date)
+                return SimpleDateFormat("dd MMM").format(date)// + System.lineSeparator() + SimpleDateFormat("hh:mm").format(date)
             }
         }
 
@@ -70,6 +71,13 @@ class MeasurementActivity : Activity() {
                 intent.putExtra("measurement", measurement)
                 startActivity(intent)
             })
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        (data?.getSerializableExtra("measurement") as? Measurement)?.let {
+            Toast.makeText(this, "$measurement", Toast.LENGTH_SHORT).show()
         }
     }
 }

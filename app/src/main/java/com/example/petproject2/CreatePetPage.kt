@@ -2,12 +2,14 @@ package com.example.petproject2
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.*
 import com.example.petproject2.database.AppDatabase
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_create_pet_page.*
+
 
 class CreatePetPage : Activity() {
     private val imageLoader = ImageLoader(this)
@@ -48,14 +50,14 @@ class CreatePetPage : Activity() {
             }
             val uriString = imageLoader.getImageUriString()
             val pet = Pet(
-                    petNameEditText.text.toString(),
-                    speciesEditText.text.toString(),
-                    breedEditText.text.toString(),
-                    neuterEditText.text.toString(),
-                    chipEditText.text.toString(),
-                    vetAddressEditText.text.toString(),
-                    notesEditText.text.toString(),
-                    uriString
+                petNameEditText.text.toString(),
+                speciesEditText.text.toString(),
+                breedEditText.text.toString(),
+                neuterEditText.text.toString(),
+                chipEditText.text.toString(),
+                vetAddressEditText.text.toString(),
+                notesEditText.text.toString(),
+                uriString
             )
             val database = AppDatabase.getDatabase(this@CreatePetPage)
             database.petDao().insertAll(pet.generatePetEntity())
@@ -66,8 +68,16 @@ class CreatePetPage : Activity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) { return }
 
-        imageLoader.handleRequest(requestCode, resultCode, data)?.let {
-            uploadPetAvatarButton.setImageBitmap(it)
+        data.getData()?.let { avatarUriOnResult ->
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                contentResolver.takePersistableUriPermission(
+                    avatarUriOnResult,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+                imageLoader.handleRequest(requestCode, resultCode, avatarUriOnResult)?.let {
+                    uploadPetAvatarButton.setImageBitmap(it)
+                }
+            }
         }
     }
 }

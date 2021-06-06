@@ -1,102 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".VetNoteFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/vetNoteTimeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="50dp"
+        tools:context=".VetNoteFragment">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/outline_medication_24"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        <TextView
+            android:id="@+id/vetNoteTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:layout_marginLeft="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/vetNoteTimeText2"
+            app:layout_constraintStart_toEndOf="@+id/vetNoteTimeText2"
+            app:layout_constraintTop_toTopOf="@id/vetNoteTimeText2" />
 
+        <TextView
+            android:id="@+id/vetNoteTimeText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Time: "
+            android:textColor="@color/purple_200"
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/outline_coronavirus_24"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-    <TextView
-        android:id="@+id/textDisease"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:text="Disease"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        tools:layout_editor_absoluteY="130dp" />
-
-    <TextView
-        android:id="@+id/vetNoteText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="notes"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="@+id/imageView7"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-        android:layout_marginStart="15dp"
-        tools:layout_editor_absoluteY="57dp" />
-
-    <TextView
-        android:id="@+id/vetNotePrescribedMedText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:text="prescribed medicaments"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        tools:layout_editor_absoluteY="76dp" />
-
-    <TextView
-        android:id="@+id/vetNoteDoctorNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:text="doctor name"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/imageView8"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/outline_edit_note_24"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/outline_person_24"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/vetNoteTimeText"
-        app:layout_constraintTop_toBottomOf="@+id/vetNoteTimeText" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_medication_24"
+            app:layout_constraintStart_toStartOf="@+id/imageView7"
+            app:layout_constraintTop_toTopOf="@+id/vetNotePrescribedMedText" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_coronavirus_24"
+            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/textDisease" />
+
+        <TextView
+            android:id="@+id/textDisease"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:text="Disease"
+            android:layout_marginRight="40dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/vetNotePrescribedMedText" />
+
+        <TextView
+            android:id="@+id/vetNoteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:text="notes"
+            android:layout_marginRight="40dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintTop_toBottomOf="@+id/vetNoteDoctorNameText" />
+
+        <TextView
+            android:id="@+id/vetNotePrescribedMedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:text="prescribed medicaments"
+            android:layout_marginRight="40dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/vetNoteText" />
+
+        <TextView
+            android:id="@+id/vetNoteDoctorNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:text="doctor name"
+            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintTop_toBottomOf="@+id/vetNoteTimeText" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_edit_note_24"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
+            app:layout_constraintTop_toTopOf="@+id/vetNoteText" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_person_24"
+            app:layout_constraintStart_toStartOf="@+id/vetNoteTimeText2"
+            app:layout_constraintTop_toTopOf="@+id/vetNoteDoctorNameText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

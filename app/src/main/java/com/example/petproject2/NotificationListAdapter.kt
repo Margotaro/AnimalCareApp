@@ -44,7 +44,7 @@ class NotificationListAdapter(private val mAlarm: List<Alarm>, val alarmChangeLi
     // Involves populating data into the item through holder
     override fun onBindViewHolder(viewHolder: NotificationListAdapter.ViewHolder, position: Int) {
         // Get the data model based on position
-                val alarm: Alarm = mAlarm.get(position)
+        val alarm: Alarm = mAlarm.get(position)
         // Set item views based on your views and data model
         val descriptionTextView = viewHolder.alarmNameTextView
         val switch = viewHolder.alarmSwitch

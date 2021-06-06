@@ -11,123 +11,109 @@
         android:id="@+id/timePickerCreateNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="15dp"
+
         android:timePickerMode="spinner"
-        
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texViewDateCreateNotification"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/okButtonCreateNotification"
-        android:layout_width="95dp"
-        android:layout_height="79dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:src="@drawable/baseline_done_24"
+        android:background="#00000000"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ok1" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/noButtonCreateNotification"
-        android:layout_width="95dp"
-        android:layout_height="81dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/white"
+        android:background="#00000000"
+        android:src="@drawable/baseline_close_20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cancel1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/descriptionCreateNotification_label"
         android:layout_width="90dp"
         android:layout_height="23dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
         android:text="Description"
-        app:layout_constraintEnd_toStartOf="@+id/descriptionTextInputCreateNotification"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/okButtonCreateNotification"
         app:layout_constraintTop_toBottomOf="@+id/timePickerCreateNotification" />
 
     <TextView
         android:id="@+id/dateCreateNotification"
         android:layout_width="90dp"
         android:layout_height="23dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="65dp"
         android:text="Date"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/descriptionCreateNotification_label"
         app:layout_constraintTop_toBottomOf="@+id/descriptionCreateNotification_label" />
 
     <TextView
         android:id="@+id/onOffSwitchCreateNotification"
         android:layout_width="90dp"
         android:layout_height="23dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="4dp"
         android:text="On/off"
-        app:layout_constraintEnd_toStartOf="@+id/switchCreateNotification"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dateCreateNotification"
         app:layout_constraintTop_toBottomOf="@+id/dateCreateNotification" />
-
-    <TextView
-        android:id="@+id/repeatTextCreateNotification"
-        android:layout_width="90dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="305dp"
-        android:text="Repeat TODO"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/onOffSwitchCreateNotification" />
 
     <Button
         android:id="@+id/setDateButtonCreateNotification"
         android:layout_width="106dp"
         android:layout_height="37dp"
-        android:layout_marginTop="50dp"
         android:background="@color/white"
         android:text="set date"
         android:textSize="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/texViewDateCreateNotification"
-        app:layout_constraintStart_toEndOf="@+id/dateCreateNotification"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTextInputCreateNotification" />
+        app:layout_constraintBottom_toBottomOf="@+id/dateCreateNotification"
+        app:layout_constraintStart_toStartOf="@+id/descriptionTextInputCreateNotification"
+        app:layout_constraintTop_toTopOf="@+id/dateCreateNotification" />
 
     <TextView
         android:id="@+id/texViewDateCreateNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set date and time, please"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="@+id/texViewDateCreateNotification2"
+        app:layout_constraintStart_toEndOf="@+id/texViewDateCreateNotification2" />
+
+    <TextView
+        android:id="@+id/texViewDateCreateNotification2"
         android:layout_width="90dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="16dp"
-        android:text="Set date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTextInputCreateNotification" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Go off time: "
+        android:textSize="25dp"
+        android:textColor="@color/purple_200"
+        app:layout_constraintStart_toStartOf="@+id/okButtonCreateNotification"
+        app:layout_constraintTop_toBottomOf="@+id/okButtonCreateNotification" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/descriptionTextInputCreateNotification"
         android:layout_width="227dp"
         android:layout_height="39dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
         android:hint="hint"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/texViewDateCreateNotification"
         app:layout_constraintTop_toBottomOf="@+id/timePickerCreateNotification" />
 
     <Switch
         android:id="@+id/switchCreateNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="256dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/onOffSwitchCreateNotification"
-        app:layout_constraintTop_toBottomOf="@+id/setDateButtonCreateNotification" />
+        app:layout_constraintBottom_toBottomOf="@+id/onOffSwitchCreateNotification"
+        app:layout_constraintStart_toStartOf="@+id/setDateButtonCreateNotification"
+        app:layout_constraintTop_toTopOf="@+id/onOffSwitchCreateNotification" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

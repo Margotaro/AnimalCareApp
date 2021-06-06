@@ -21,7 +21,6 @@ class MeasurementViewScenario(
 ) : BaseAdapter(), AdapterView.OnItemClickListener {
 
     private val dataSource: MeasurementsListDataSource
-
     init {
         dataSource = MeasurementsListDataSourceMock()
     }

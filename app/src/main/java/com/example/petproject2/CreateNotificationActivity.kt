@@ -85,7 +85,7 @@ class CreateNotificationActivity : AppCompatActivity(), PickerListener {
         timePicker.setOnTimeChangedListener { _, hour, minute ->
             UpdateTime(hour, minute)
         }
-
+        dateTextField.setText("Set date and time, please.")
     }
     override fun UpdateDate(year: Int, month: Int, day: Int) {
         alarm?.setDate(year, month, day)

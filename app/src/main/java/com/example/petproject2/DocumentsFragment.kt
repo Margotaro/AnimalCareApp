@@ -84,8 +84,8 @@ class DocumentsFragment : Fragment(), PetScenarioSliderFragment {
 
                 if(position >= docList.size)
                 {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.type = "file/*"
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = "*/*"
                     startActivityForResult(intent, DOCUMENT_SELECT)
                     return@OnItemClickListener
                 }
@@ -98,6 +98,7 @@ class DocumentsFragment : Fragment(), PetScenarioSliderFragment {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == DOCUMENT_SELECT) {
+            var uri = data?.data
             /*database.let {
                 if(petId == null) return@let
                 val notificationEntityList = it.documentDao().findDocumentList(petId!!)?.bar
