@@ -30,7 +30,7 @@ class PetPageActivity : FragmentActivity() {
         val oldSavedIntent = getIntent()
         petId = oldSavedIntent.getIntExtra("PetId", -1)
 
-        val avatarUri = Uri.parse(oldSavedIntent.getStringExtra("Avatar"))
+//        val avatarUri = Uri.parse(oldSavedIntent.getStringExtra("Avatar"))
         val avatarPlaceholderId = this.getResources().getIdentifier("pet_placeholder1", "drawable", packageName)
         var selectedImage = BitmapFactory.decodeResource(this.getResources(), avatarPlaceholderId)
         if(oldSavedIntent.getStringExtra("Avatar") != null) {

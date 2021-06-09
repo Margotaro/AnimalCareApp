@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.*
+import androidx.core.app.NotificationManagerCompat
 import com.example.petproject2.database.AppDatabase
 import com.example.petproject2.database.PetEntity
 import kotlinx.android.synthetic.main.activity_home_page.*
@@ -20,6 +21,10 @@ class HomePageActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
         imageView.setImageResource(R.drawable.avatar)
+
+        NotificationHelper.createNotificationChannel(this,
+            NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
+            getString(R.string.app_name), "App notification channel.")
 
         loadFromDatabase()
     }
